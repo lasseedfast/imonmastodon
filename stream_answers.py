@@ -34,12 +34,13 @@ def stream():
             try:
                 twitter_username =  json_response['includes']['users'][0]['username']
                 mastodon_username = extract_mastodon_handle(json_response['includes']['tweets'][0]['text'])
-                print(mastodon_username)
-                source_tweet = str(json_response['data']['id'])
-                # Add Mastodon username to db.
-                db.insert_user(twitter_username, mastodon_username, source_tweet)
+                if mastodon_username:
+                    print(mastodon_username)
+                    source_tweet = str(json_response['data']['id'])
+                    # Add Mastodon username to db.
+                    db.insert_user(twitter_username, mastodon_username, source_tweet)
 
-            except KeyError:
+            except:
                 pass
 
 
