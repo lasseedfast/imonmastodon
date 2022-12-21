@@ -36,7 +36,10 @@ def stream():
                 mastodon_username = extract_mastodon_handle(json_response['includes']['tweets'][0]['text'])
                 if mastodon_username:
                     print(mastodon_username)
-                    source_tweet = str(json_response['data']['id'])
+                    try:
+                        source_tweet = str(json_response['data']['id'])
+                    except:
+                        source_tweet = 'user'
                     # Add Mastodon username to db.
                     db.insert_user(twitter_username, mastodon_username, source_tweet)
 
