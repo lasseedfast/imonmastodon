@@ -1,6 +1,5 @@
 import requests
 import config
-from requests_oauthlib import OAuth2Session, OAuth1Session
 
 class API:
     def __init__(self):
