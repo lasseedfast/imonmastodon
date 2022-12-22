@@ -1,14 +1,18 @@
 
 import psycopg2
+import config
 
 class DB:
     def __init__(self, config):
+        self.config = config
+
+    def con(self):
         # Establish a connection to the database
         self.database = psycopg2.connect(
-            host=config['postgres_host'],
-            database=config['postgres_database'],
-            user=config['postgres_user'],
-            password=config['postgres_password']
+            host=self.config['postgres_host'],
+            database=self.config['postgres_database'],
+            user=self.config['postgres_user'],
+            password=self.config['postgres_password']
             )
         self.cursor = self.database.cursor()
 
@@ -24,7 +28,7 @@ class DB:
         self.database.commit()
 
     def insert_user(self, twitter_username, mastodon_username, source_tweet):
-       
+        self.con()
         # Create the INSERT statement
         sql = f"""INSERT INTO usernames (id, mastodon, source) 
         VALUES ('{twitter_username}', '{mastodon_username}', '{source_tweet}') 
@@ -33,3 +37,4 @@ class DB:
         self.cursor.execute(sql)
         # Commit the transaction
         self.database.commit()
+        self.database.close()
