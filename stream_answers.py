@@ -39,14 +39,14 @@ def stream():
                     try:
                         source_tweet = str(json_response['data']['id'])
                     except Exception as e:
-                        print(json_response)
+                        print(1, json_response)
                         print(e)
                         source_tweet = 'user'
                     # Add Mastodon username to db.
                     db.insert_user(twitter_username, mastodon_username, source_tweet)
 
             except Exception as e:
-                print(json_response)
+                print(2, json_response)
                 print(e)
                 pass
 
